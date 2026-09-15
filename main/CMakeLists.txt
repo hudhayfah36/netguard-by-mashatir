@@ -1,0 +1,25 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "config_store.c"
+        "auth.c"
+        "blocklist.c"
+        "schedule_store.c"
+        "profile_store.c"
+        "time_service.c"
+        "dns_engine.c"
+        "wifi_manager.c"
+        "web_server.c"
+    INCLUDE_DIRS "."
+    EMBED_TXTFILES "dashboard.html"
+    REQUIRES
+        nvs_flash
+        esp_wifi
+        esp_netif
+        esp_event
+        esp_http_server
+        lwip
+        esp_psram
+        esp_timer
+        mbedtls
+)

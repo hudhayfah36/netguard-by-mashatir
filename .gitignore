@@ -1,0 +1,15 @@
+# ESP-IDF build output and generated configuration
+/build/
+/sdkconfig
+/sdkconfig.old
+/sdkconfig.backup
+
+# IDE and operating-system files
+/.vscode/
+/.idea/
+.DS_Store
+*.swp
+*~
+
+# Local flashing, monitoring, and diagnostic output
+*.log

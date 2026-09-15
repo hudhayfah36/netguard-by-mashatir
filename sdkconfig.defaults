@@ -1,0 +1,31 @@
+# ============================================================================
+# Required sdkconfig defaults for ESP32-S3-N16R8 (16MB Flash / 8MB Octal PSRAM)
+# These are applied on first `idf.py build` / `idf.py menuconfig` and merged
+# into the generated sdkconfig. Adjust partitions.csv if your app grows past
+# the default factory partition size.
+# ============================================================================
+
+# ---- PSRAM (Octal, required for ESP32-S3-N16R8) ----
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=16384
+
+# ---- Flash size ----
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# ---- Networking ----
+CONFIG_LWIP_MAX_SOCKETS=16
+CONFIG_LWIP_SO_REUSE=y
+
+# ---- HTTP server ----
+CONFIG_HTTPD_MAX_REQ_HDR_LEN=1024
+CONFIG_HTTPD_MAX_URI_LEN=512
+
+# ---- FreeRTOS ----
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+CONFIG_FREERTOS_HZ=1000
