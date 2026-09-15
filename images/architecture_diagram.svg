@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="deviceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="netguardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ecca3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38a169;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="upstreamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+    <filter id="dropShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="500" fill="#1a1a2e"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">How NetGuard Works</text>
+  
+  <!-- Client Devices (Left) -->
+  <g transform="translate(80, 150)">
+    <rect x="0" y="0" width="140" height="60" rx="8" fill="url(#deviceGrad)" filter="url(#dropShadow)"/>
+    <text x="70" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Client Device</text>
+    <text x="70" y="45" font-family="Arial" font-size="11" fill="#e0e0e0" text-anchor="middle">(Phone/Laptop/Tablet)</text>
+  </g>
+  
+  <g transform="translate(80, 250)">
+    <rect x="0" y="0" width="140" height="60" rx="8" fill="url(#deviceGrad)" filter="url(#dropShadow)"/>
+    <text x="70" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Client Device</text>
+    <text x="70" y="45" font-family="Arial" font-size="11" fill="#e0e0e0" text-anchor="middle">(Phone/Laptop/Tablet)</text>
+  </g>
+  
+  <g transform="translate(80, 350)">
+    <rect x="0" y="0" width="140" height="60" rx="8" fill="url(#deviceGrad)" filter="url(#dropShadow)"/>
+    <text x="70" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Client Device</text>
+    <text x="70" y="45" font-family="Arial" font-size="11" fill="#e0e0e0" text-anchor="middle">(Phone/Laptop/Tablet)</text>
+  </g>
+  
+  <!-- Arrows to NetGuard -->
+  <g stroke="#4ecca3" stroke-width="3" fill="none" marker-end="url(#arrowhead)">
+    <path d="M220 180 L320 220"/>
+    <path d="M220 280 L320 250"/>
+    <path d="M220 380 L320 280"/>
+  </g>
+  
+  <!-- NetGuard Box (Center) -->
+  <g transform="translate(320, 180)">
+    <rect x="0" y="0" width="260" height="140" rx="10" fill="url(#netguardGrad)" filter="url(#dropShadow)"/>
+    
+    <!-- NetGuard Title -->
+    <text x="130" y="30" font-family="Arial" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">NetGuard by Mashatir</text>
+    <text x="130" y="50" font-family="Arial" font-size="11" fill="#e0e0e0" text-anchor="middle">(ESP32-S3 DNS Appliance)</text>
+    
+    <!-- Processing Steps -->
+    <rect x="20" y="65" width="220" height="25" rx="4" fill="#ffffff" opacity="0.2"/>
+    <text x="130" y="82" font-family="Arial" font-size="11" fill="#ffffff" text-anchor="middle">1. Global Block Rules</text>
+    
+    <rect x="20" y="95" width="220" height="25" rx="4" fill="#ffffff" opacity="0.2"/>
+    <text x="130" y="112" font-family="Arial" font-size="11" fill="#ffffff" text-anchor="middle">2. Device Profile Rules</text>
+    
+    <rect x="20" y="125" width="220" height="25" rx="4" fill="#ffffff" opacity="0.2"/>
+    <text x="130" y="142" font-family="Arial" font-size="11" fill="#ffffff" text-anchor="middle">3. Daily Schedules</text>
+  </g>
+  
+  <!-- Arrow to Upstream -->
+  <path d="M580 250 L650 250" stroke="#4ecca3" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Upstream DNS (Right) -->
+  <g transform="translate(650, 220)">
+    <rect x="0" y="0" width="200" height="60" rx="8" fill="url(#upstreamGrad)" filter="url(#dropShadow)"/>
+    <text x="100" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Cloudflare Family</text>
+    <text x="100" y="45" font-family="Arial" font-size="11" fill="#e0e0e0" text-anchor="middle">Upstream DNS Resolver</text>
+  </g>
+  
+  <!-- Arrow to Internet -->
+  <path d="M850 250 L880 250" stroke="#f5576c" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Internet -->
+  <g transform="translate(880, 235)">
+    <circle cx="0" cy="0" r="30" fill="#4a5568" opacity="0.8"/>
+    <text x="0" y="5" font-family="Arial" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Internet</text>
+  </g>
+  
+  <!-- Legend at bottom -->
+  <g transform="translate(50, 420)">
+    <text x="0" y="0" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff">DNS Flow:</text>
+    <text x="0" y="25" font-family="Arial" font-size="11" fill="#a0aec0">Device → NetGuard (Filtering) → Cloudflare Family → Internet</text>
+    <text x="0" y="50" font-family="Arial" font-size="11" fill="#a0aec0">Blocked domains return NXDOMAIN without forwarding</text>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4ecca3"/>
+    </marker>
+  </defs>
+</svg>
