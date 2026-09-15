@@ -1,308 +1,99 @@
 # 🛡️ NetGuard by Mashatir
 
-## Privacy-First DNS Safety for Families & Schools
+> **Local-first ESP32-S3 DNS safety for families, schools, and small networks.**
 
-![NetGuard Hero](images/netguard_hero.svg)
-
-<div align="center">
-
-**A local-first DNS safety appliance built for the ESP32-S3**
-
-[Features](#-features) • [How It Works](#-how-it-works) • [Getting Started](#-getting-started) • [Buy Device](#-buy-pre-built-device) • [Documentation](#-documentation)
-
-</div>
-
----
-
-## 🌟 What is NetGuard?
-
-**NetGuard by Mashatir** is a privacy-respecting, low-cost network controller that helps families, parents, schools, and small networks maintain understandable internet controls **without sending browsing history to the cloud** or paying for monthly subscriptions.
-
-NetGuard becomes your network's DNS server, intelligently filtering requests before they reach the internet. It's transparent about what it can and cannot do, putting you in control without false promises.
-
-### 💡 Perfect For:
-- 👨‍👩‍👧‍👦 **Families** wanting screen-time boundaries
-- 🏫 **Schools** needing simple content filtering
-- 🏢 **Small offices** requiring basic web controls
-- 🔒 **Privacy advocates** who refuse cloud-based monitoring
-
----
-
-## ✨ Key Features
-
-### 🎯 Core Capabilities
-
-| Feature | Description |
-|---------|-------------|
-| **🏠 Local-First** | All configuration stays on-device. No cloud account required. |
-| **🔒 Privacy-Safe** | No browsing history uploads. Ever. |
-| **💰 No Subscription** | One-time setup, lifetime usage. |
-| **👤 Per-Device Profiles** | Up to 16 individual device rules with custom schedules. |
-| **⏰ Daily Access Windows** | Allow sites only during specific times (e.g., after homework). |
-| **🚫 Global Blocklists** | Permanent website blocks for the entire network. |
-| **⚠️ Bypass Alerts** | Notifications when VPN/proxy domains are detected (signals, not proof). |
-| **🛡️ Secure Dashboard** | Salted password hashing, CSRF protection, RAM-only sessions. |
-
-### 🎛️ What You Can Control
-
-- ✅ **Permanent website blocks** (e.g., block `youtube.com` network-wide)
-- ✅ **Time-based access windows** (e.g., allow educational sites 4 PM - 8 PM)
-- ✅ **Per-device restrictions** (different rules for child's tablet vs. study computer)
-- ✅ **Midnight-crossing schedules** (e.g., 10 PM - 6 AM overnight rules)
-- ✅ **Subdomain matching** (blocking `youtube.com` also blocks `www.youtube.com`)
-
----
-
-## 🔄 How It Works
-
-![Architecture Diagram](images/architecture_diagram.svg)
-
-```
-┌─────────────────┐
-│  Client Device  │ (Phone, Laptop, Tablet)
-│  (DNS Request)  │
-└────────┬────────┘
-         │ Router DHCP gives client NetGuard's LAN IP
-         ▼
-┌─────────────────────────────────────────┐
-│     NetGuard by Mashatir (ESP32-S3)     │
-│  ┌───────────────────────────────────┐  │
-│  │ • Global permanent block rules    │  │
-│  │ • Device-profile rules            │  │
-│  │ • Daily schedules                 │  │
-│  │ • Possible-bypass indicators      │  │
-│  └───────────────────────────────────┘  │
-└────────┬────────────────────────────────┘
-         │ Filtered DNS requests only
-         ▼
-┌─────────────────────┐
-│ Cloudflare Family   │ (Upstream DNS Resolver)
-│ DNS Resolver        │ (1.1.1.3)
-└────────┬────────────┘
-         ▼
-┌─────────────────────┐
-│     Internet        │
-│   DNS Answer        │
-└─────────────────────┘
-```
-
-### Policy Evaluation Order
-
-When NetGuard receives a DNS query from a known profile:
-
-1. **Global permanent block** → Always blocks the domain
-2. **Profile permanent block** → Blocks for that specific device
-3. **Global schedule** → Enforced time windows
-4. **Profile schedule** → Additional per-device time windows
-5. **Forward upstream** → Only if allowed by all applicable rules
-
-> ⚠️ **Important:** Profile rules are *additive* — they can add restrictions but cannot weaken global restrictions.
-
----
-
-## 🚀 Getting Started
-
-### Option 1: Build Your Own (DIY)
-
-#### Hardware Requirements
-- **ESP32-S3** development board (with PSRAM recommended)
-- USB cable for flashing
-- Wi-Fi network with router access
-
-#### Software Requirements
-- ESP-IDF v5.x or later
-- Python 3.x
-- Git
-
-#### Flash Instructions
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/netguard-mashatir.git
-cd netguard-mashatir
-
-# Build the project
-idf.py build
-
-# Flash to ESP32-S3 (replace /dev/ttyUSB0 with your device)
-idf.py -p /dev/ttyUSB0 flash monitor
-```
-
-> ⚠️ **Note:** This project uses a custom partition table. After partition-table changes, always perform a **full flash** instead of just flashing the app.
-
-#### Initial Setup
-
-1. **Power on** your ESP32-S3 device
-2. **Connect to Wi-Fi:** Look for `NetGuard-Mashatir Setup` access point
-3. **Enter password:** `netguard@1234`
-4. **Access dashboard:** Navigate to the device's IP address in your browser
-5. **Configure admin password** and set up your network rules
-
-### Option 2: Buy Pre-Built Device 🛒
+![NetGuard by Mashatir protects family devices](images/netguard_hero.svg)
 
 <div align="center">
 
-**Don't want to build it yourself?**
+**Private by design · Clear controls · No cloud account · No subscription**
 
-We offer ready-to-use NetGuard appliances with pre-configured firmware.
-
-[**🛍️ Order Now**](mailto:contact@mashatir.com) | [**📧 Contact Us**](mailto:sales@mashatir.com)
+[Features](#-features) · [How it works](#-how-it-works) · [Pre-built device](#-get-a-pre-built-netguard) · [Firmware](#-release-firmware) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
-**Pre-built devices include:**
-- ✅ Fully assembled ESP32-S3 hardware
-- ✅ Pre-flashed firmware
-- ✅ Quick-start guide
-- ✅ Email support for setup assistance
-- ✅ 1-year hardware warranty
+NetGuard is an **ESP32-S3 DNS filter**, **parental-control appliance**, and **family internet safety device**. It applies understandable website rules on your own network, without uploading browsing history or requiring a cloud subscription.
 
-*Contact us for bulk pricing for schools and organizations.*
+## ✨ Features
 
----
+| Control | What it does |
+| --- | --- |
+| Global website blocks | Permanently blocks a domain and its subdomains for every protected device. |
+| Daily access windows | Allows a selected domain only during a local-time window, including midnight-crossing windows. |
+| Per-device profiles | Adds blocked domains and schedules to up to 16 router-reserved IPv4 addresses. |
+| Possible-bypass alerts | Records known VPN, proxy, and encrypted-DNS lookups as signals—not proof of VPN use. |
+| Local dashboard | Configures Wi-Fi, policies, counters, and status without a cloud account. |
+| Privacy-safe operation | Keeps configuration local; activity counters and recent alerts stay in RAM and reset on reboot. |
 
-## 📋 Deployment Requirements
+## 🔄 How it works
 
-### Router Configuration (Critical for Full Functionality)
+![NetGuard DNS filtering architecture](images/architecture_diagram.svg)
 
-For **per-device profiles** to work correctly, your router must be configured properly:
+1. Router DHCP gives clients NetGuard’s LAN IP as their DNS server.
+2. NetGuard evaluates global blocks, profile blocks, schedules, and possible-bypass indicators.
+3. Blocked domains receive `NXDOMAIN`; allowed requests are sent to Cloudflare Family DNS.
 
-1. **Assign static IP** to NetGuard via DHCP reservation
-2. **Set router's DNS server** to NetGuard's LAN IP (not router's IP)
-3. **Reserve IPv4 addresses** for each device needing a profile
-4. **Test connectivity:** `nslookup example.com <netguard-lan-ip>`
+**Policy priority:** global permanent blocks → profile blocks → global schedule → profile schedule → upstream DNS. Profile rules can add restrictions but never weaken global rules.
 
-> ⚠️ **Common Issue:** If your router acts as a DNS proxy, all requests appear to come from the router itself, breaking per-device identification. Check your router's documentation for "DNS forwarding" or "DNS proxy" settings.
+## 🏠 Get a pre-built NetGuard
 
-### Understanding Limitations
+<table>
+  <tr>
+    <td width="58%">
+      <h3>Plug in. Protect your network. Stay in control.</h3>
+      <p>A ready-to-use NetGuard appliance delivers local DNS safety without assembling hardware or maintaining a cloud dashboard.</p>
+      <p><strong>Included:</strong> ESP32-S3 hardware, pre-flashed firmware, setup guidance, and a one-year hardware warranty.</p>
+      <p><a href="mailto:sales@mashatir.com?subject=NetGuard%20pre-built%20device%20order"><strong>🛒 Order a pre-built NetGuard</strong></a> &nbsp;·&nbsp; <a href="mailto:sales@mashatir.com?subject=NetGuard%20school%20or%20bulk%20enquiry"><strong>🏫 School and bulk enquiries</strong></a></p>
+    </td>
+    <td width="42%" align="center">
+      <h2>NetGuard</h2>
+      <p><strong>Family DNS safety</strong></p>
+      <p>✓ Local-first<br>✓ No subscription<br>✓ No browsing-history upload<br>✓ ESP32-S3 powered</p>
+    </td>
+  </tr>
+</table>
 
-DNS filtering **cannot** reliably stop all access by itself. The following can bypass DNS-only filtering:
+## 📦 Release firmware
 
-| Bypass Method | Description | Mitigation |
-|---------------|-------------|------------|
-| **Manual DNS** | User sets custom DNS (8.8.8.8, etc.) | Block port 53 outbound on router |
-| **DoH/DoT** | Encrypted DNS (HTTPS/TLS) | Block known DoH endpoints |
-| **VPNs** | Tunnel all traffic externally | Requires firewall/DPI controls |
-| **IPv6 DNS** | Uses IPv6 nameservers | Deploy IPv6 filtering too |
-| **Direct IP** | Access via IP address (no DNS) | Limited practical use |
+Current release: **v0.1.0**, for ESP32-S3 boards with **16 MB flash**.
 
-**NetGuard provides possible-bypass alerts**, not confirmed VPN detection. Reliable enforcement requires router/firewall policy alongside NetGuard.
+The full-flash image is `release/netguard-v0.1.0-esp32s3-16mb.bin`. Select it in an ESP32 flashing tool and flash at address `0x0`. Follow [docs/FLASHING.md](docs/FLASHING.md) for the safe flashing and verification steps.
 
----
+## ⚙️ Initial setup
 
-## 🎛️ Dashboard Security
+1. Join `NetGuard-Mashatir Setup` after powering on the device.
+2. Enter the setup password supplied with the device.
+3. Visit `http://192.168.4.1`, create an administrator password, and enter home Wi-Fi details.
+4. Reserve NetGuard’s LAN IP, then configure router **LAN DHCP DNS** to give clients that address directly.
 
-NetGuard takes security seriously:
+Per-device policy requires direct DNS to NetGuard. A router DNS proxy makes requests appear to come from the router instead of individual devices.
 
-- 🔐 **Salted iterative hashing** for passwords (never stored in plain text)
-- 🍪 **RAM-only sessions** (logout/reboot invalidates all sessions)
-- 🛡️ **CSRF protection** on all state-changing requests
-- ⏱️ **12-hour sliding idle window** for authenticated sessions
-- 🔒 **Cookie-based authentication** with secure flags
+## ⚠️ Network limits
 
----
+DNS filtering is not a complete firewall or an exact screen-time meter. Manual DNS, encrypted DNS, IPv6 DNS, direct IP connections, VPNs, proxies, and Private Relay can bypass DNS-only controls. A possible-bypass alert is a known-provider lookup, not proof of VPN usage. Use compatible router/firewall controls for stronger enforcement.
 
-## 📊 What Makes NetGuard Different?
+## 🔐 Security and privacy
 
-Many consumer routers offer basic website blocking. Here's why NetGuard adds value:
+- Administrator passwords use salted iterative hashing; state-changing dashboard requests use CSRF protection.
+- Sessions, counters, and alerts are RAM-only and reset on logout or reboot.
+- Keep the local HTTP dashboard on a trusted network; never expose it to the Internet.
+- Production devices should use secure boot, flash encryption, and NVS encryption after hardware validation.
 
-| Feature | Typical Router | NetGuard by Mashatir |
-|---------|---------------|---------------------|
-| Per-device rules | ❌ Rarely | ✅ Up to 16 profiles |
-| Time-based schedules | ⚠️ Basic | ✅ Complex windows (midnight crossing) |
-| Privacy | ❌ Often cloud-based | ✅ 100% local, no uploads |
-| Cost | 💰 Subscription fees | 💵 One-time purchase |
-| Transparency | ❌ Hidden lists | ✅ Honest about limitations |
-| Hardware | 💸 Expensive proprietary | 💡 Affordable ESP32-S3 |
-| Repairability | ❌ Sealed units | ✅ Open source, fixable |
+## 🗺️ Roadmap
 
----
+- Richer per-device rule and alert views.
+- Passive discovery of clients that query NetGuard directly.
+- DNS-over-TCP, better concurrent upstream forwarding, tests, and production security provisioning.
+- Router-specific direct-DNS and firewall deployment guides.
 
-## 🔮 Roadmap
-
-### Coming Soon
-
-- 📱 **Enhanced Dashboard**: Better profile editing, alert details, session management
-- 🔍 **Device Discovery**: "Seen DNS clients" view for easy profile creation
-- 🌐 **Router Integration**: Optional APIs for DHCP lease visibility
-- 🔌 **DNS-over-TCP**: Support for truncated response retries
-- 🧪 **Testing Suite**: Unit tests for schedules, domain matching, packet handling
-- 🔐 **Production Security**: Secure boot, flash encryption guides
-
-### What We Won't Do
-
-- ❌ Cloud-based browsing history collection
-- ❌ Hidden subscription features
-- ❌ False "VPN detection" claims
-- ❌ Closed-source list updates
-
----
-
-## ⚙️ Technical Specifications
-
-| Specification | Detail |
-|--------------|--------|
-| **Platform** | ESP32-S3 (with PSRAM recommended) |
-| **Wi-Fi Hostname** | `netguard-mashatir` |
-| **Setup AP** | `NetGuard-Mashatir Setup` (WPA2) |
-| **Setup Password** | `netguard@1234` |
-| **Max Profiles** | 16 devices |
-| **Rules per Profile** | 16 blocked domains + 16 schedules |
-| **Alert Storage** | 20 newest alerts per profile (RAM, cleared on reboot) |
-| **Upstream DNS** | Cloudflare Family (1.1.1.3, 1.0.0.3) |
-| **Default Timezone** | UTC+05:00 (configurable) |
-| **Storage** | NVS (Non-Volatile Storage) for config |
-
----
+See [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for the product plan and [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## 🤝 Contributing
 
-We welcome contributions! Areas we need help with:
-
-- 🧪 Testing (especially multi-client scenarios)
-- 📚 Documentation improvements
-- 🌐 Translations for non-English speakers
-- 💡 Feature suggestions aligned with our principles
-
-Please read our contributing guidelines before submitting PRs.
-
----
+Contributions for firmware quality, testing, documentation, and translations are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+NetGuard is **source-available under the PolyForm Noncommercial License 1.0.0**. Personal and other non-commercial use is allowed. Commercial use, resale, and commercial distribution require written permission from Mashatir. See [LICENSE](LICENSE).
 
-**Commercial use:** You may use this firmware freely. If you sell pre-built devices, we appreciate attribution but don't require royalties. Consider contributing back improvements!
-
----
-
-## 🙏 Acknowledgments
-
-- **Cloudflare** for their free Family DNS resolvers (1.1.1.3)
-- **Espressif** for the ESP32-S3 platform and ESP-IDF
-- **The open-source community** for countless dependencies and inspiration
-
----
-
-## 📞 Support & Contact
-
-| Need | Contact |
-|------|---------|
-| **Technical Issues** | [Open a GitHub Issue](https://github.com/yourusername/netguard-mashatir/issues) |
-| **Buy Device** | [Email Sales](mailto:sales@mashatir.com) |
-| **Partnerships** | [Email Contact](mailto:contact@mashatir.com) |
-| **General Questions** | [Discussions Tab](https://github.com/yourusername/netguard-mashatir/discussions) |
-
----
-
-<div align="center">
-
-### 🛡️ **NetGuard by Mashatir**
-
-*Local Privacy. Clear Controls. Family Support. Practical Security.*
-
-**Built with ❤️ for safer home networks**
-
-[⬆️ Back to Top](#-netguard-by-mashatir)
-
-</div>
+<div align="center"><strong>Local privacy · Clear controls · Family support · Practical security</strong></div>

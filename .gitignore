@@ -13,3 +13,6 @@
 
 # Local flashing, monitoring, and diagnostic output
 *.log
+
+# Private maintainer workflow notes (intentionally never published)
+/MAINTAINER_NOTES.local.md
