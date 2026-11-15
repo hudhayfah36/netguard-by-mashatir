@@ -11,7 +11,6 @@ idf_component_register(
         "wifi_manager.c"
         "web_server.c"
     INCLUDE_DIRS "."
-    EMBED_TXTFILES "dashboard.html"
     REQUIRES
         nvs_flash
         esp_wifi

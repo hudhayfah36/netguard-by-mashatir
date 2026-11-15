@@ -13,8 +13,8 @@
  *  ----------------------------------------------------------------------
  *  - Core 0 : dns_engine task -- raw UDP socket on port 53, parses queries,
  *             checks the blocklist, replies NXDOMAIN or forwards upstream.
- *  - Core 1 : esp_http_server (pinned via httpd_config_t.core_id) serving
- *             the dashboard + REST API. Fully event-driven / non-blocking.
+ *  - Core 1 : esp_http_server (pinned via httpd_config_t.core_id) exposing
+ *             the setup and local REST API for the companion mobile app.
  *  - Shared state (blocklist, counters) is PSRAM-backed where practical and
  *    guarded by FreeRTOS mutexes inside blocklist.c.
  * ============================================================================
@@ -96,7 +96,7 @@ void app_main(void) {
     // ---- Start the DNS engine (Core 0) ----
     dns_engine_start();
 
-    // ---- Start the web dashboard (Core 1) ----
+    // ---- Start the setup/API HTTP service (Core 1) ----
     web_server_start();
 
     // ---- Periodic stats logger ----

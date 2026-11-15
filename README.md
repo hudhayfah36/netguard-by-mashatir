@@ -1,99 +1,69 @@
-# 🛡️ NetGuard by Mashatir
+# NetGuard by Mashatir
 
-> **Local-first ESP32-S3 DNS safety for families, schools, and small networks.**
+> A private, offline-first DNS security appliance for every device on your home network.
 
-![NetGuard by Mashatir protects family devices](images/netguard_hero.svg)
+![NetGuard by Mashatir](images/netguard_hero.svg)
 
-<div align="center">
+NetGuard is a small USB-C-powered ESP32-S3 device that sits on a local network and acts as its DNS server. It intercepts DNS queries from phones, laptops, TVs, consoles, and IoT devices, blocking known ad, tracker, and malware domains before a connection is made. No software is installed on client devices.
 
-**Private by design · Clear controls · No cloud account · No subscription**
+NetGuard runs offline: DNS resolution happens locally and no browsing data is sent to a cloud service. The companion mobile app provides the user interface; the device exposes a local HTTP API for setup and configuration and does **not** serve a web frontend.
 
-[Features](#-features) · [How it works](#-how-it-works) · [Pre-built device](#-get-a-pre-built-netguard) · [Firmware](#-release-firmware) · [Contributing](CONTRIBUTING.md)
+**Private by design · No accounts · No cloud dashboard · No subscription**
 
-</div>
+## Features
 
-NetGuard is an **ESP32-S3 DNS filter**, **parental-control appliance**, and **family internet safety device**. It applies understandable website rules on your own network, without uploading browsing history or requiring a cloud subscription.
+- Local DNS filtering for the whole network.
+- Blocklist mode for known advertising, tracking, and malware domains.
+- Allowlist mode for tightly controlled networks, including blocking OS-level telemetry unless explicitly allowed.
+- Per-person rules for blocking or allowing domains.
+- Time-based rules, such as blocking selected sites during study or sleep hours.
+- Bluetooth-assisted initial setup, followed by local-network communication through the device’s local IP address.
+- Built-in Wi-Fi and Bluetooth, three physical buttons (reset, boot, and Bluetooth pairing), and USB-C power.
+- Open-source firmware, PCB schematics, and companion mobile app.
 
-## ✨ Features
-
-| Control | What it does |
-| --- | --- |
-| Global website blocks | Permanently blocks a domain and its subdomains for every protected device. |
-| Daily access windows | Allows a selected domain only during a local-time window, including midnight-crossing windows. |
-| Per-device profiles | Adds blocked domains and schedules to up to 16 router-reserved IPv4 addresses. |
-| Possible-bypass alerts | Records known VPN, proxy, and encrypted-DNS lookups as signals—not proof of VPN use. |
-| Local dashboard | Configures Wi-Fi, policies, counters, and status without a cloud account. |
-| Privacy-safe operation | Keeps configuration local; activity counters and recent alerts stay in RAM and reset on reboot. |
-
-## 🔄 How it works
+## How it works
 
 ![NetGuard DNS filtering architecture](images/architecture_diagram.svg)
 
-1. Router DHCP gives clients NetGuard’s LAN IP as their DNS server.
-2. NetGuard evaluates global blocks, profile blocks, schedules, and possible-bypass indicators.
-3. Blocked domains receive `NXDOMAIN`; allowed requests are sent to Cloudflare Family DNS.
+1. During initial setup, the mobile app pairs with NetGuard over Bluetooth and helps configure Wi-Fi.
+2. The app discovers or receives the device’s local IP address.
+3. The router gives that address to network clients as their DNS server.
+4. NetGuard evaluates each DNS query against the selected mode, domain rules, and schedules.
+5. Blocked domains receive `NXDOMAIN`; permitted domains are resolved locally or through the configured upstream resolver.
+6. The mobile app sends authenticated HTTP requests to the device’s local API for configuration and status.
 
-**Policy priority:** global permanent blocks → profile blocks → global schedule → profile schedule → upstream DNS. Profile rules can add restrictions but never weaken global rules.
+The API is intended to be reachable only from the trusted local network. NetGuard does not expose a cloud service or require an account.
 
-## 🏠 Get a pre-built NetGuard
+## Hardware
 
-<table>
-  <tr>
-    <td width="58%">
-      <h3>Plug in. Protect your network. Stay in control.</h3>
-      <p>A ready-to-use NetGuard appliance delivers local DNS safety without assembling hardware or maintaining a cloud dashboard.</p>
-      <p><strong>Included:</strong> ESP32-S3 hardware, pre-flashed firmware, setup guidance, and a one-year hardware warranty.</p>
-      <p><a href="mailto:sales@mashatir.com?subject=NetGuard%20pre-built%20device%20order"><strong>🛒 Order a pre-built NetGuard</strong></a> &nbsp;·&nbsp; <a href="mailto:sales@mashatir.com?subject=NetGuard%20school%20or%20bulk%20enquiry"><strong>🏫 School and bulk enquiries</strong></a></p>
-    </td>
-    <td width="42%" align="center">
-      <h2>NetGuard</h2>
-      <p><strong>Family DNS safety</strong></p>
-      <p>✓ Local-first<br>✓ No subscription<br>✓ No browsing-history upload<br>✓ ESP32-S3 powered</p>
-    </td>
-  </tr>
-</table>
+The PCB design is complete and the 3D enclosure design is in progress.
 
-## 📦 Release firmware
+![NetGuard PCB render](images/netguard_pcb_render.png)
 
-Current release: **v0.1.0**, for ESP32-S3 boards with **16 MB flash**.
+## Firmware and mobile app
 
-The full-flash image is `release/netguard-v0.1.0-esp32s3-16mb.bin`. Select it in an ESP32 flashing tool and flash at address `0x0`. Follow [docs/FLASHING.md](docs/FLASHING.md) for the safe flashing and verification steps.
+The ESP32 firmware provides the DNS engine, Wi-Fi/Bluetooth setup support, local configuration storage, rule enforcement, and HTTP API endpoints. The companion mobile app owns the frontend and communicates with the device over Bluetooth during setup and over the local IP address afterward.
 
-## ⚙️ Initial setup
+The API includes setup, authentication, status, network configuration, blocklist/allowlist, schedules, and per-person profile operations. The device should never be exposed directly to the public Internet.
 
-1. Join `NetGuard-Mashatir Setup` after powering on the device.
-2. Enter the setup password supplied with the device.
-3. Visit `http://192.168.4.1`, create an administrator password, and enter home Wi-Fi details.
-4. Reserve NetGuard’s LAN IP, then configure router **LAN DHCP DNS** to give clients that address directly.
+## Network limits
 
-Per-device policy requires direct DNS to NetGuard. A router DNS proxy makes requests appear to come from the router instead of individual devices.
+DNS filtering is not a complete firewall. Manually configured DNS, DNS-over-HTTPS, DNS-over-TLS, IPv6 DNS, VPNs, proxies, Private Relay, and direct IP connections can bypass or reduce visibility unless the router also enforces corresponding network rules.
 
-## ⚠️ Network limits
+## Development
 
-DNS filtering is not a complete firewall or an exact screen-time meter. Manual DNS, encrypted DNS, IPv6 DNS, direct IP connections, VPNs, proxies, and Private Relay can bypass DNS-only controls. A possible-bypass alert is a known-provider lookup, not proof of VPN usage. Use compatible router/firewall controls for stronger enforcement.
+This is an ESP-IDF project targeting the ESP32-S3. See [docs/FLASHING.md](docs/FLASHING.md) for firmware flashing instructions and [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
-## 🔐 Security and privacy
+## Crowdfunding status
 
-- Administrator passwords use salted iterative hashing; state-changing dashboard requests use CSRF protection.
-- Sessions, counters, and alerts are RAM-only and reset on logout or reboot.
-- Keep the local HTTP dashboard on a trusted network; never expose it to the Internet.
-- Production devices should use secure boot, flash encryption, and NVS encryption after hardware validation.
+NetGuard is being prepared for crowdfunding. The firmware and PCB schematics are complete; enclosure development and the companion mobile app are continuing toward a production-ready device.
 
-## 🗺️ Roadmap
+## Contributing
 
-- Richer per-device rule and alert views.
-- Passive discovery of clients that query NetGuard directly.
-- DNS-over-TCP, better concurrent upstream forwarding, tests, and production security provisioning.
-- Router-specific direct-DNS and firewall deployment guides.
+Contributions to firmware, hardware documentation, the mobile app, testing, and translations are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-See [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) for the product plan and [CHANGELOG.md](CHANGELOG.md) for release history.
+## License
 
-## 🤝 Contributing
+NetGuard by Mashatir is open source under the [MIT License](LICENSE).
 
-Contributions for firmware quality, testing, documentation, and translations are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## 📄 License
-
-NetGuard is **source-available under the PolyForm Noncommercial License 1.0.0**. Personal and other non-commercial use is allowed. Commercial use, resale, and commercial distribution require written permission from Mashatir. See [LICENSE](LICENSE).
-
-<div align="center"><strong>Local privacy · Clear controls · Family support · Practical security</strong></div>
+<div align="center"><strong>Local privacy · Open hardware · No subscription</strong></div>

@@ -12,7 +12,7 @@ The project is deliberately transparent about the boundary of DNS filtering: it 
 
 NetGuard is being developed as a low-cost, privacy-respecting family network controller with these core ideas:
 
-- A local dashboard for configuring the appliance.
+- A companion mobile app that configures the appliance through Bluetooth during setup and authenticated HTTP requests over the local network afterward. The ESP32 exposes an API and does not serve the app frontend.
 - Permanent website blocks for the entire network.
 - Daily access windows for sites, such as allowing a learning or entertainment site only between selected local times.
 - Per-device family profiles using a friendly name and a router-reserved IPv4 address.
@@ -47,9 +47,9 @@ For per-device rules to work, clients must send DNS directly to NetGuard. If a r
 - The Wi-Fi hostname is `netguard-mashatir`.
 - The fallback setup access point is named `NetGuard-Mashatir Setup`.
 - The setup access point uses WPA2 protection. Its current configured password is `netguard@1234`.
-- The dashboard allows Wi-Fi credentials to be saved and reports whether the device is on the home network or has fallen back to setup mode.
+- The setup/API service allows Wi-Fi credentials to be saved and reports whether the device is on the home network or has fallen back to setup mode. The companion mobile app presents the user interface.
 
-### Dashboard security
+### API security
 
 - An administrator password setup and login flow is included.
 - Passwords are stored as a salted, iterative hash rather than plain text.
@@ -146,12 +146,12 @@ Reliable VPN blocking requires router/firewall policy, traffic controls, or DPI-
 - Device profiles are based on a configured IPv4 address. DNS alone cannot reliably learn a device's friendly name, MAC address, or every device connected to the router.
 - Passive observation can reveal devices that send DNS directly to NetGuard, but it cannot enumerate all router clients. Full network inventory needs router API access, DHCP/ARP visibility, or NetGuard operating as the network gateway.
 - DNS-over-TCP is not yet implemented. The current DNS service is UDP-focused, with bounded UDP response handling.
-- The dashboard has core profile controls, but profile-rule editing, detailed alert presentation, and discovery views still need refinement.
+- The API has core profile controls, while the companion mobile app still needs profile-rule editing, detailed alert presentation, and discovery views.
 - Production security features such as secure boot, flash encryption, and NVS encryption need a deliberate one-time provisioning process before production use.
 
 ## Future updates roadmap
 
-### Dashboard and usability
+### Mobile app and usability
 
 - Improve the profile screen to display, edit, remove, and reorder every per-device block and schedule rule.
 - Show detailed possible-bypass alerts with plain-language explanations, timestamp/uptime, profile, provider category, and safe handling guidance.

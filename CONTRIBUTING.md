@@ -13,7 +13,7 @@ Thank you for helping improve NetGuard’s privacy, reliability, and accessibili
 
 1. Discuss substantial work in an issue first.
 2. Keep each branch and pull request focused.
-3. Run `idf.py build`; test relevant dashboard and DNS behaviour on hardware when possible.
+3. Run `idf.py build`; test relevant API, mobile-app integration, and DNS behaviour on hardware when possible.
 4. State the privacy/security impact, tests performed, and router assumptions in the pull request.
 5. Update docs and `CHANGELOG.md` for user-visible changes.
 
