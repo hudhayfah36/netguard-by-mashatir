@@ -36,7 +36,7 @@ The API is intended to be reachable only from the trusted local network. NetGuar
 
 ## Hardware
 
-The PCB design is complete and the 3D enclosure design is in progress.
+The PCB design is complete and the 3D enclosure design is in progress. The repository includes the [PCB render](images/netguard_pcb_render.png) and the [KiCad PCB design](hardware/pcb/netguard_compact_r2.kicad_pcb).
 
 ![NetGuard PCB render](images/netguard_pcb_render.png)
 
