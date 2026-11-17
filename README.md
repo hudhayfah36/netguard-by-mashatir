@@ -12,7 +12,9 @@ A USB-C-powered, open-source DNS filtering device built around the ESP32-S3.
 
 </div>
 
-![Illustration of NetGuard protecting connected devices](images/netguard_hero.svg)
+![NetGuard concept render: a compact white device for local DNS filtering](images/cover_1.png)
+
+<div align="center"><em>Enclosure concept render; final hardware design is in progress.</em></div>
 
 ## The idea
 
